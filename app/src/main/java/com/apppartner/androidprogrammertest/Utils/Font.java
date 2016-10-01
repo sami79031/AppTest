@@ -61,7 +61,7 @@ public class Font  {
 
         MachinatoSemiBoldItalic{
             public String toString(){
-                return "fonts/Jelloween - Machinato SemiBoldt Italic.ttf";
+                return "fonts/Jelloween - Machinato SemiBold Italic.ttf";
             }
         },
 

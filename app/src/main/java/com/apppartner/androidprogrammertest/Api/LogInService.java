@@ -23,6 +23,7 @@ public class LogInService extends AsyncTask<Void, Void, Void> {
     private Context context;
     private ProgressDialog proDialog;
     private String jsonStr = "";
+    long startTime;
 
     public LogInService(Context context, Map<String, String> params) {
         this.context = context;
@@ -43,12 +44,12 @@ public class LogInService extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         ServiceConnection serviceConnection = new ServiceConnection();
         try {
+            startTime = System.currentTimeMillis();
             jsonStr = serviceConnection.makeWebServiceCall(URL, params);
+
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("locl",e.getLocalizedMessage());
         }
-        assert jsonStr != null;
-        Log.d("Service", jsonStr);
 
         return null;
     }
@@ -60,7 +61,16 @@ public class LogInService extends AsyncTask<Void, Void, Void> {
         if (proDialog.isShowing())
             proDialog.dismiss();
 
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        JSONObject jObj = null;
+        try {
+            jObj = new JSONObject(jsonStr);
+            jObj.put("time", estimatedTime);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        delegate.parsedData(jsonStr);
+        assert jObj != null;
+        delegate.parsedData(jObj.toString());
     }
 }

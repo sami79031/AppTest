@@ -9,6 +9,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apppartner.androidprogrammertest.Utils.Font;
@@ -24,11 +25,18 @@ public class AnimationActivity extends BaseAppActivity implements View.OnTouchLi
     int visibility;
     int from = 0;
     int to = 0;
+    TextView animPromt, bonusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        bonusText = (TextView) findViewById(R.id.bonus_point_id);
+        animPromt = (TextView) findViewById(R.id.anim_prompt_id);
+
+        bonusText.setTypeface(Font.setFont(this, Font.FontType.MachinatoSemiBoldItalic.toString()));
+        animPromt.setTypeface(Font.setFont(this, Font.FontType.MachinatoExtraLight.toString()));
 
         animationButton = (Button) findViewById(R.id.animation_btn_id);
         animationButton.setOnTouchListener(this);

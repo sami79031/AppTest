@@ -15,5 +15,9 @@
     <string name="chat">Chat</string>
     <string name="login">Login</string>
     <string name="coding_tasks">CODING TASKS</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string formatted="false" name="animation_text_prompt">Animate the AppPartner icon. Make it fade to 0% alpha and then to 100% alpha when the fage button is pressed. Allow it to be dragged arround the screen by touching and draggingn.</string>
+    <string name="bonus_points_for_creativity">BONUS POINTS FOR CREATIVITY</string>
 
 </resources>

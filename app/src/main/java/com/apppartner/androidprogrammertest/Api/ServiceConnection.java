@@ -3,8 +3,11 @@ package com.apppartner.androidprogrammertest.Api;
 import android.net.Uri;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -54,14 +57,27 @@ public class ServiceConnection {
 
             urlConnection.setDoOutput(true);
             urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
 
-
-            //send the POST out
-            PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
             String query = createQueryStringForParameters(params);
+            //send the POST out
+            urlConnection.setFixedLengthStreamingMode(
+                    query.getBytes().length);
+
+            PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
             out.print(query);
             out.close();
 
+            // handle issues
+            int statusCode = urlConnection.getResponseCode();
+            if (statusCode != HttpURLConnection.HTTP_OK) {
+                JSONObject obj = new JSONObject();
+                obj.put("code", statusCode);
+                obj.put("message", urlConnection.getResponseMessage());
+
+                return obj.toString();
+            }
 
             reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
@@ -74,19 +90,29 @@ public class ServiceConnection {
 
             String line = null;
             while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line + "\n");
+                stringBuilder.append(line).append("\n");
             }
+
+
 
         } catch (MalformedURLException | SocketTimeoutException e) {
             Log.d("URL", ""+e.getLocalizedMessage());
-        } finally {
+        } catch (FileNotFoundException e){
+            Log.d("FNFE", e.getLocalizedMessage());
+        }
+
+        finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
 
+        assert stringBuilder != null;
         return stringBuilder.toString();
     }
+
+
+
 
     public static String createQueryStringForParameters(Map<String, String> parameters) {
         StringBuilder parametersAsQueryString = new StringBuilder();
