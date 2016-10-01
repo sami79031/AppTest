@@ -1,0 +1,49 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_coding_tasks"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+
+    <TextView
+        android:id="@+id/coding_task_id"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:layout_gravity="center"
+        android:text="@string/coding_tasks"
+        android:textColor="@color/primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp" />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:background="@drawable/btn_main_chat"
+        android:onClick="onChatButtonClicked" />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_main_login"
+        android:id="@+id/button2"
+        android:onClick="onLoginButtonClicked"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_main_animation"
+        android:id="@+id/button3"
+        android:onClick="onAnimationTestButtonClicked"/>
+</LinearLayout>
