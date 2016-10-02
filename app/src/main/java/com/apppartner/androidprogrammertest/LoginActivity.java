@@ -1,5 +1,6 @@
 package com.apppartner.androidprogrammertest;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -39,6 +42,8 @@ public class LoginActivity extends BaseAppActivity implements LogInResponseProto
         username = (EditText) findViewById(R.id.username_id);
         password = (EditText) findViewById(R.id.password_id);
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
     }
 
@@ -83,6 +88,14 @@ public class LoginActivity extends BaseAppActivity implements LogInResponseProto
                 .show();
     }
 
+    public void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_login;
@@ -92,6 +105,10 @@ public class LoginActivity extends BaseAppActivity implements LogInResponseProto
     public void onBackPressed()
     {
         backToMain();
+    }
+
+    public void onTouchScreen(View v){
+        hideKeyboard();
     }
 
     private void backToMain(){
@@ -107,6 +124,7 @@ public class LoginActivity extends BaseAppActivity implements LogInResponseProto
                 isLoginSucess = true;
             showAlert(jObj.getString("code"), jObj.getString("message").concat("\nTime: ")
                     .concat(jObj.getString("time").concat("mls")));
+            hideKeyboard();
 
         } catch (JSONException e) {
             e.printStackTrace();
